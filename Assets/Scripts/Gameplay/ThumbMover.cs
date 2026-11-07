@@ -7,6 +7,7 @@ public class ThumbMover : MonoBehaviour
     [SerializeField] private DirectionGiver _directionGiver;
 
     [Header("Configuration")]
+    [SerializeField] private Vector3 _thumbTransformOffset = new Vector3(0f, 0f, 0f);
     [SerializeField] private float _thumbDistanceMultiplier = 1f;
 
     private void FixedUpdate()
@@ -22,6 +23,6 @@ public class ThumbMover : MonoBehaviour
     
     private void MoveThumb(Vector2 direction)
     {
-        _thumbTransform.localPosition = direction * _thumbDistanceMultiplier;
+        _thumbTransform.localPosition = _thumbTransformOffset + new Vector3(direction.x, 0, direction.y) * _thumbDistanceMultiplier;
     }
 }
