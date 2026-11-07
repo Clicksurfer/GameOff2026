@@ -8,6 +8,12 @@ public class PlayerInputDetector : MonoBehaviour
     [Tooltip("Controls the position of the reference point relative to the centre of the screen.")]
     [SerializeField] private Vector2 _referencePointDiffToCentre = new Vector2(0f, 0f);
 
+    private void Update()
+    {
+        Vector2 dirMouseVector = GetDirectionalMouseVector();
+        Debug.Log($"Directional Mouse Vector: {dirMouseVector}");
+    }
+
     /// <summary>
     /// When invoked, checks the position of the mouse relative to the anchor point (screen center) and returns the directional vector, scaled to reference power
     /// </summary>
