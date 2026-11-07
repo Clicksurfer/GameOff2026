@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerInputDetector : MonoBehaviour
+public class PlayerInputDetector : DirectionGiver
 {
     [Tooltip("What is the minimum relative distance from the reference point where the vector is considered maxed out. 1 means that when the mouse is on the screen bounds it's considered maxed. 0.5 means when its halfway from the reference to the screen bound.")]
     [Range(0f,1f)] [SerializeField] private float _maxRelativeYDistance = 0.5f;
@@ -8,16 +8,10 @@ public class PlayerInputDetector : MonoBehaviour
     [Tooltip("Controls the position of the reference point relative to the centre of the screen.")]
     [SerializeField] private Vector2 _referencePointDiffToCentre = new Vector2(0f, 0f);
 
-    private void Update()
-    {
-        Vector2 dirMouseVector = GetDirectionalMouseVector();
-        Debug.Log($"Directional Mouse Vector: {dirMouseVector}");
-    }
-
     /// <summary>
     /// When invoked, checks the position of the mouse relative to the anchor point (screen center) and returns the directional vector, scaled to reference power
     /// </summary>
-    public Vector2 GetDirectionalMouseVector()
+    public override Vector2 GetDirectionalVector()
     {
         Vector2 screenCentre = new Vector3(Screen.width / 2f, Screen.height / 2f);
         Vector2 referencePoint = screenCentre + _referencePointDiffToCentre;

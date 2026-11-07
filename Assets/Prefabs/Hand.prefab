@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5245996462213301673}
+  - component: {fileID: 9003705771131997522}
+  - component: {fileID: 7391914040865506645}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -32,6 +34,35 @@ Transform:
   - {fileID: 857152020639824421}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9003705771131997522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4992362019603972683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4448d6010d03fb46b3c6953db0707ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thumbTransform: {fileID: 6468221860719727346}
+  _directionGiver: {fileID: 7391914040865506645}
+  _thumbDistanceMultiplier: 1
+--- !u!114 &7391914040865506645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4992362019603972683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff2248c1dc8d834490acaa60184c559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxRelativeYDistance: 0.5
+  _referencePointDiffToCentre: {x: 0, y: 0}
 --- !u!1001 &896091281397374414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,5 +143,10 @@ PrefabInstance:
 --- !u!4 &857152020639824421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ea210d87823fd34aa0bfe5a753caa66, type: 3}
+  m_PrefabInstance: {fileID: 896091281397374414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6468221860719727346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3050005918069665988, guid: 2ea210d87823fd34aa0bfe5a753caa66, type: 3}
   m_PrefabInstance: {fileID: 896091281397374414}
   m_PrefabAsset: {fileID: 0}
