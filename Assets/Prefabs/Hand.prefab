@@ -49,7 +49,7 @@ MonoBehaviour:
   _thumbTransform: {fileID: 6468221860719727346}
   _directionGiver: {fileID: 7391914040865506645}
   _thumbTransformOffset: {x: 0, y: 0, z: 0}
-  _thumbDistanceMultiplier: 0.1
+  _thumbDistanceMultiplier: 0.03
 --- !u!114 &7391914040865506645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxRelativeYDistance: 0.5
-  _referencePointDiffToCentre: {x: 0, y: 0.5}
+  _referencePointDiffToCentre: {x: 0, y: 1}
 --- !u!1001 &896091281397374414
 PrefabInstance:
   m_ObjectHideFlags: 0
