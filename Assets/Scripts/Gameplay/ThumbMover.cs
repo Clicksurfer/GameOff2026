@@ -25,14 +25,20 @@ public class ThumbMover : MonoBehaviour
     {
         float normalizedX = (direction.x + 1f) / 2f; // Normalize the x value to be between 0 and 1
         float normalizedY = (direction.y + 1f) / 2f; // Normalize the y value to be between 0 and 1
-        
+        Debug.Log($"Normalized X: {normalizedX}, Normalized Y: {normalizedY}");
+
         // We control the thumb root's position and rotation based on the direction, and lerping between the reference transforms for the thumb root.
         Vector3 positionVerticalLerp = Vector3.Lerp(_thumbDownRootReferenceTransform.localPosition, _thumbUpRootReferenceTransform.localPosition, normalizedY);
         Vector3 positionHorizontalLerp = Vector3.Lerp(_thumbLeftRootReferenceTransform.localPosition, _thumbRightRootReferenceTransform.localPosition, normalizedX);
         Quaternion rotationVerticalLerp = Quaternion.Lerp(_thumbDownRootReferenceTransform.localRotation, _thumbUpRootReferenceTransform.localRotation, normalizedY);
         Quaternion rotationHorizontalLerp = Quaternion.Lerp(_thumbLeftRootReferenceTransform.localRotation, _thumbRightRootReferenceTransform.localRotation, normalizedX);
+        
+        // Now we lerp between horizontal and vertical based on the direction vector
+        float verticalToHorizontalLerpFactor = Mathf.Abs(direction.x) / (Mathf.Abs(direction.x) + Mathf.Abs(direction.y));
+        Vector3 positionLerp = Vector3.Lerp(positionVerticalLerp, positionHorizontalLerp, verticalToHorizontalLerpFactor);
+        Quaternion rotationLerp = Quaternion.Lerp(rotationVerticalLerp, rotationHorizontalLerp, verticalToHorizontalLerpFactor);
 
-        _thumbRootTransform.localPosition = new Vector3(positionHorizontalLerp.x, positionVerticalLerp.y, _thumbRootTransform.localPosition.z);
-        _thumbRootTransform.localRotation = new Quaternion(rotationHorizontalLerp.x, rotationVerticalLerp.y, rotationHorizontalLerp.z, rotationVerticalLerp.w);
+        _thumbRootTransform.localPosition = positionLerp;//new Vector3(positionHorizontalLerp.x, positionVerticalLerp.y, _thumbRootTransform.localPosition.z);
+        _thumbRootTransform.localRotation = rotationLerp;//new Quaternion(rotationHorizontalLerp.x, rotationVerticalLerp.y, rotationHorizontalLerp.z, rotationVerticalLerp.w);
     }
 }
