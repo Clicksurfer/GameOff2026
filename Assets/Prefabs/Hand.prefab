@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarView: {fileID: 0}
   _thumbTipVelocityTracker: {fileID: 2174664599689966892}
+  _directionGiver: {fileID: 7391914040865506645}
 --- !u!114 &2174664599689966892
 MonoBehaviour:
   m_ObjectHideFlags: 0

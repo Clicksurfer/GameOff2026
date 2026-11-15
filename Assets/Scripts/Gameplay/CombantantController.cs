@@ -11,6 +11,7 @@ public class CombantantController : MonoBehaviour
     
     [SerializeField] private HealthBarView _healthBarView;
     [SerializeField] private ThumbTipVelocityTracker _thumbTipVelocityTracker;
+    [SerializeField] private DirectionGiver _directionGiver;
     
     private CombatantType _combatantType;
     private CombatantState _combatantState;
@@ -73,6 +74,10 @@ public class CombantantController : MonoBehaviour
 
     public Vector2 GetThumbVector()
     {
-        return _thumbTipVelocityTracker.GetThumbTipVelocity();
+        // Thumb vector is determined partially by where the thumb's actually been, and what the combatant intends to do.
+        Vector2 thumbTipVelocity = _thumbTipVelocityTracker.GetThumbTipVelocity();
+        Vector2 intendedDirection = _directionGiver.GetDirectionalVector();
+        Vector2 combinedVector = (thumbTipVelocity + intendedDirection) / 2f;
+        return combinedVector;//(thumbTipVelocity + intendedDirection) / 2f;
     }
 }
