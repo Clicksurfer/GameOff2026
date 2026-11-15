@@ -115,8 +115,8 @@ MonoBehaviour:
   _thumbLeftRootReferenceTransform: {fileID: 5579898807335685393}
   _thumbRightRootReferenceTransform: {fileID: 1164307360663978609}
   _directionGiver: {fileID: 7391914040865506645}
-  _thumbMaxDistancePerFrame: 0.001
-  _thumbMaxDegreesPerFrame: 2
+  _thumbMaxDistancePerFrame: 0.01
+  _thumbMaxDegreesPerFrame: 3
 --- !u!114 &7391914040865506645
 MonoBehaviour:
   m_ObjectHideFlags: 0
