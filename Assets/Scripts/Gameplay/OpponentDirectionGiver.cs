@@ -31,33 +31,42 @@ public class OpponentDirectionGiver : DirectionGiver
 
 public class ClockBotStrategy : OpponentStrategyBase
 {
+    private float _positionTime = 2f;
+    
     private float _timeElapsed;
+    private float _rightTime;
+    private float _downTime;
+    private float _leftTime;
+    private float _upTime;
+    private float _cycleTime;
 
     public ClockBotStrategy(MonoBehaviour owner) : base(owner)
     {
         _timeElapsed = 0f;
+        _rightTime = _positionTime;
+        _downTime = _rightTime + _positionTime;
+        _leftTime = _downTime + _positionTime;
+        _upTime = _leftTime + _positionTime;
+        _cycleTime = _upTime;
     }
 
     public override Vector2 GetDirectionalVector()
     {
         _timeElapsed += Time.fixedDeltaTime;
-        switch ((int)_timeElapsed % 8)
+        float timeInCycle = _timeElapsed % _cycleTime;
+        if (timeInCycle < _rightTime)
         {
-            case 0:
-            case 1:
-                return Vector2.right; // Move right for 2 seconds
-            case 2:
-            case 3:
-                return Vector2.down; // Move down for 2 seconds
-            case 4:
-            case 5:
-                return Vector2.left; // Move left for 2 seconds
-            case 6:
-            case 7:
-                return Vector2.up; // Move up for 2 seconds
-            default:
-                return Vector2.zero; // Should never reach here
+            return Vector2.right;
         }
+        if (timeInCycle < _downTime)
+        {
+            return Vector2.down;
+        }
+        if (timeInCycle < _leftTime)
+        {
+            return Vector2.left;
+        }
+        return Vector2.up;
     }
 }
 
