@@ -10,6 +10,9 @@ public class ThumbWarManager : MonoBehaviour
     [Header("Config")]
     [SerializeField] private float _startHp = 100f;
     [SerializeField] private float _collisionDamage = 10f;
+    [SerializeField] private float _pinDamage = 10f;
+    
+    ThumbCollisionHandler _collisionHandler;
 
     private void Start()
     {
@@ -33,9 +36,11 @@ public class ThumbWarManager : MonoBehaviour
     
     private void HandleCollision(Collision collision)
     {
-        // For simplicity, we assume any collision detected is between the player and opponent.
-        Debug.Log($"Collision detected between {_playerCombatant.name} and {_opponentCombatant.name}. Applying {_collisionDamage} damage to both.");
-        _playerCombatant.TakeDamage(_collisionDamage);
-        _opponentCombatant.TakeDamage(_collisionDamage);
+        if (_collisionHandler == null)
+        {
+            _collisionHandler = new ThumbCollisionHandler(_playerCombatant, _opponentCombatant, _collisionDamage, _pinDamage);
+        }
+        
+        _collisionHandler.HandleCollision();
     }
 }

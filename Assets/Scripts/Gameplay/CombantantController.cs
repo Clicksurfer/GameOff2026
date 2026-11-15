@@ -10,6 +10,7 @@ public class CombantantController : MonoBehaviour
     public event Action<CombatantType> OnDied;
     
     [SerializeField] private HealthBarView _healthBarView;
+    [SerializeField] private DirectionGiver _directionGiver;
     
     private CombatantType _combatantType;
     private CombatantState _combatantState;
@@ -68,5 +69,12 @@ public class CombantantController : MonoBehaviour
             _combatantState = CombatantState.Dead;
             OnDied?.Invoke(_combatantType);
         }
+    }
+
+    public Vector2 GetThumbVector()
+    {
+        // TODO - Make thumb vector based on the thumb's current rotation and speed.
+        // For now we match it to the input.
+        return _directionGiver.GetDirectionalVector();
     }
 }

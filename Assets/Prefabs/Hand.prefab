@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBarView: {fileID: 0}
+  _directionGiver: {fileID: 7391914040865506645}
 --- !u!1 &7410718315056553025
 GameObject:
   m_ObjectHideFlags: 0
