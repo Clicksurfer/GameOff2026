@@ -70,16 +70,3 @@ public class CombantantController : MonoBehaviour
         }
     }
 }
-
-public enum CombatantType
-{
-    Player,
-    Opponent
-}
-
-public enum CombatantState
-{
-    Normal,
-    Stunned,
-    Dead
-}
