@@ -77,7 +77,7 @@ public class CombantantController : MonoBehaviour
         // Thumb vector is determined partially by where the thumb's actually been, and what the combatant intends to do.
         Vector2 thumbTipVelocity = _thumbTipVelocityTracker.GetThumbTipVelocity();
         Vector2 intendedDirection = _directionGiver.GetDirectionalVector();
-        Vector2 combinedVector = (thumbTipVelocity + intendedDirection) / 2f;
+        Vector2 combinedVector = intendedDirection;//(thumbTipVelocity + intendedDirection) / 2f;
         return combinedVector;//(thumbTipVelocity + intendedDirection) / 2f;
     }
 }
