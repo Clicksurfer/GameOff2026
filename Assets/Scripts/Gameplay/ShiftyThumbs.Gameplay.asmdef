@@ -1,3 +1,16 @@
 {
-	"name": "ShiftyThumbs.Gameplay"
+    "name": "ShiftyThumbs.Gameplay",
+    "rootNamespace": "",
+    "references": [
+        "GUID:794cd0939d305e64fb3249b01896f75b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
