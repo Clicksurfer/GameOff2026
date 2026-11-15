@@ -132,6 +132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2174664599689966892, guid: d3d7f410d3c707c429ebe8d6f43bad4d, type: 3}
+      propertyPath: _thumbTipTransform
+      value: 
+      objectReference: {fileID: 7479295183227148439}
     - target: {fileID: 4992362019603972683, guid: d3d7f410d3c707c429ebe8d6f43bad4d, type: 3}
       propertyPath: m_Name
       value: HandOpponentVariant

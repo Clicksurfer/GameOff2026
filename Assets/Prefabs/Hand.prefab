@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 9003705771131997522}
   - component: {fileID: 7391914040865506645}
   - component: {fileID: 5251775819495127339}
+  - component: {fileID: 2174664599689966892}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -144,7 +145,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBarView: {fileID: 0}
-  _directionGiver: {fileID: 7391914040865506645}
+  _thumbTipVelocityTracker: {fileID: 2174664599689966892}
+--- !u!114 &2174664599689966892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4992362019603972683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc79276eaddb49b3b85c0d7ae3ac2e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thumbTipTransform: {fileID: 877711540803621493}
+  _thumbTipPosHistorySize: 5
 --- !u!1 &7410718315056553025
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +383,11 @@ PrefabInstance:
 --- !u!4 &226471832062578497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6471187650335814473, guid: 5f0312ce3398a7544b78d8d113ad1905, type: 3}
+  m_PrefabInstance: {fileID: 6551277373903469576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &877711540803621493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6252282648116178557, guid: 5f0312ce3398a7544b78d8d113ad1905, type: 3}
   m_PrefabInstance: {fileID: 6551277373903469576}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1075431675941034812 stripped

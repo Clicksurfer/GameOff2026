@@ -43,8 +43,6 @@ public class ThumbMover : MonoBehaviour
         Quaternion rotationLerp = Quaternion.Lerp(rotationVerticalLerp, rotationHorizontalLerp, verticalToHorizontalLerpFactor);
 
         // Instead of directory setting the rotation and position of the thumb, we will move towards it, giving the sensation of "weight".
-        // _thumbRootTransform.localPosition = positionLerp;
-        // _thumbRootTransform.localRotation = rotationLerp;
         _thumbRootTransform.localPosition =
             Vector3.MoveTowards(_thumbRootTransform.localPosition, positionLerp, _thumbMaxDistancePerFrame);
         _thumbRootTransform.localRotation =

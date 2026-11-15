@@ -10,7 +10,7 @@ public class CombantantController : MonoBehaviour
     public event Action<CombatantType> OnDied;
     
     [SerializeField] private HealthBarView _healthBarView;
-    [SerializeField] private DirectionGiver _directionGiver;
+    [SerializeField] private ThumbTipVelocityTracker _thumbTipVelocityTracker;
     
     private CombatantType _combatantType;
     private CombatantState _combatantState;
@@ -73,8 +73,6 @@ public class CombantantController : MonoBehaviour
 
     public Vector2 GetThumbVector()
     {
-        // TODO - Make thumb vector based on the thumb's current rotation and speed.
-        // For now we match it to the input.
-        return _directionGiver.GetDirectionalVector();
+        return _thumbTipVelocityTracker.GetThumbTipVelocity();
     }
 }
