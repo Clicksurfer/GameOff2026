@@ -10,6 +10,10 @@ public class ThumbMover : MonoBehaviour
     [SerializeField] private Transform _thumbRightRootReferenceTransform;
     [SerializeField] private DirectionGiver _directionGiver;
 
+    [Header("Config")]
+    [SerializeField] private float _thumbMaxDistancePerFrame = 0.001f;
+    [SerializeField] private float _thumbMaxDegreesPerFrame = 1f;
+
     private void FixedUpdate()
     {
         Vector2 moveDirection = GetDirectionToMoveTo();
@@ -38,7 +42,12 @@ public class ThumbMover : MonoBehaviour
         Vector3 positionLerp = Vector3.Lerp(positionVerticalLerp, positionHorizontalLerp, verticalToHorizontalLerpFactor);
         Quaternion rotationLerp = Quaternion.Lerp(rotationVerticalLerp, rotationHorizontalLerp, verticalToHorizontalLerpFactor);
 
-        _thumbRootTransform.localPosition = positionLerp;//new Vector3(positionHorizontalLerp.x, positionVerticalLerp.y, _thumbRootTransform.localPosition.z);
-        _thumbRootTransform.localRotation = rotationLerp;//new Quaternion(rotationHorizontalLerp.x, rotationVerticalLerp.y, rotationHorizontalLerp.z, rotationVerticalLerp.w);
+        // Instead of directory setting the rotation and position of the thumb, we will move towards it, giving the sensation of "weight".
+        // _thumbRootTransform.localPosition = positionLerp;
+        // _thumbRootTransform.localRotation = rotationLerp;
+        _thumbRootTransform.localPosition =
+            Vector3.MoveTowards(_thumbRootTransform.localPosition, positionLerp, _thumbMaxDistancePerFrame);
+        _thumbRootTransform.localRotation =
+            Quaternion.RotateTowards(_thumbRootTransform.localRotation, rotationLerp, _thumbMaxDegreesPerFrame);
     }
 }
