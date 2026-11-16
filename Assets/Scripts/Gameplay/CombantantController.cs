@@ -17,7 +17,7 @@ public class CombantantController : MonoBehaviour
     private CombatantState _combatantState;
     private float _maxHealth;
     private float _currentHealth;
-    
+
     public void Initialize(CombatantType combantantType, float initialHealth)
     {
         if (initialHealth <= 0f)
@@ -29,7 +29,7 @@ public class CombantantController : MonoBehaviour
         _currentHealth = initialHealth;
         OnInitialized?.Invoke(_combatantType);
     }
-    
+
     public void Stun(float duration)
     {
         StartCoroutine(StunCoroutine(duration));

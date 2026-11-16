@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2301295159443760964}
   - component: {fileID: 3651917709654290408}
+  - component: {fileID: 3235629754570221709}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50,6 +51,23 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _gameStateManager: {fileID: 3235629754570221709}
   _startHp: 100
   _collisionDamage: 1
   _pinDamage: 10
+--- !u!114 &3235629754570221709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5866738353108919471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eeace8744fa41fe9e3d3a2f14cb86cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startCountdownProgressorGameObject: {fileID: 5866738353108919471}
+  _startMatchProgressorGameObject: {fileID: 0}
+  _pauseGameProgressorGameObject: {fileID: 0}
+  _endMatchProgressorGameObject: {fileID: 5866738353108919471}

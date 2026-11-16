@@ -2,7 +2,8 @@
     "name": "ShiftyThumbs.Gameplay",
     "rootNamespace": "",
     "references": [
-        "GUID:794cd0939d305e64fb3249b01896f75b"
+        "GUID:47e758b5b08feec4c9b9a56344a32afa",
+        "GUID:1f079d05a7610f34f85d6c1cd0d346c9"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
