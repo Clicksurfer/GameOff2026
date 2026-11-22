@@ -1,0 +1,12 @@
+newmtl Base_SG
+illum 4
+Kd 0.18 0.71 0.61
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl Ropes_SG
+illum 4
+Kd 0.11 0.29 0.54
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
