@@ -13,9 +13,7 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
     [SerializeField] private float _startHp = 100f;
     [SerializeField] private float _collisionDamage = 10f;
     [SerializeField] private float _pinDamage = 10f;
-    [SerializeField] private float _tryingToPinDurationUntilStun = 2f;
-    [SerializeField] private float _stunDuration = 3f;
-    [SerializeField] private float _pinAttemptRecoverySpeed = 1f;
+    [SerializeField] private float _cantPinDamagePerSecond = 5f;
 
     private ThumbCollisionHandler _collisionHandler;
     
@@ -36,9 +34,7 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
         {
             CombatantType = CombatantType.Player,
             InitialHealth = _startHp,
-            TryingToPinDurationUntilStun = _tryingToPinDurationUntilStun,
-            StunDuration = _stunDuration,
-            PinAttemptRecoverySpeed = _pinAttemptRecoverySpeed
+            CantPinDamagePerSecond = _cantPinDamagePerSecond
         };
         
         _playerCombatant.Initialize(initData);

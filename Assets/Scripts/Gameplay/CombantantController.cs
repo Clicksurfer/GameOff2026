@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using Gameplay;
 using UnityEngine;
 
 public class CombantantController : MonoBehaviour
 {
     public event Action<CombatantType> OnInitialized;
-    public event Action<CombatantType> OnStunned;
-    public event Action<CombatantType> OnStunDone;
     public event Action<CombatantType> OnDied;
     
     [SerializeField] private HealthBarView _healthBarView;
@@ -18,24 +14,19 @@ public class CombantantController : MonoBehaviour
     // Initialization data
     private CombatantType _combatantType;
     private float _maxHealth;
-    private float _tryingToPinDurationUntilStun;
-    private float _stunDuration;
-    private float _pinAttemptRecoverySpeed;
-    
+    private float _cantPinDamagePerSecond;
+
     // State
-    private CombatantFlags _combatantFlags;
+    private CombatantState _combatantState;
     private float _currentHealth;
     private ThumbState _thumbState;
-
-    // Pinning
-    private float _timeUntilStun;
 
     private void FixedUpdate()
     {
         // We determine the intention of the thumb based on the direction giver
         _thumbState = GetThumbState(_directionGiver.GetDirectionalVector());
 
-        HandlePinAndStun();
+        HandlePinAttempting();
     }
 
     public void Initialize(CombatantInitializationData data)
@@ -48,10 +39,7 @@ public class CombantantController : MonoBehaviour
         _combatantType = data.CombatantType;
         _maxHealth = data.InitialHealth;
         _currentHealth = _maxHealth;
-        _tryingToPinDurationUntilStun = data.TryingToPinDurationUntilStun;
-        _stunDuration = data.StunDuration;
-        _pinAttemptRecoverySpeed = data.PinAttemptRecoverySpeed;
-        _timeUntilStun = _tryingToPinDurationUntilStun;
+        _cantPinDamagePerSecond = data.CantPinDamagePerSecond;
         OnInitialized?.Invoke(_combatantType);
     }
 
@@ -70,7 +58,7 @@ public class CombantantController : MonoBehaviour
     /// </summary>
     public void SetAsPinned()
     {
-        _combatantFlags.SetFlag(CombatantFlags.Pinned);
+        _combatantState = CombatantState.Pinned;
         _thumbMover.SetEnabled(true);
     }
     
@@ -79,7 +67,7 @@ public class CombantantController : MonoBehaviour
     /// </summary>
     public void StopGettingPinned()
     {
-        _combatantFlags.ClearFlag(CombatantFlags.Pinned);
+        _combatantState = CombatantState.Pinned;
         _thumbMover.SetEnabled(false);
     }
 
@@ -94,55 +82,22 @@ public class CombantantController : MonoBehaviour
         }
     }
 
-    private void HandlePinAndStun()
+    private void HandlePinAttempting()
     {
-        if (!_combatantFlags.HasAnyFlag() && _thumbState == ThumbState.TryingToPin)
+        if (_combatantState == CombatantState.Normal && _thumbState == ThumbState.TryingToPin)
         {
-            _timeUntilStun -= Time.fixedDeltaTime;
-            
-            // Stun player if needed
-            if (_timeUntilStun <= 0f && !_combatantFlags.HasFlag(CombatantFlags.Stunned))
-            {
-                Stun(_stunDuration);
-            }
-        }
-        else
-        {
-            // Recover stun timer over time
-            _timeUntilStun += _pinAttemptRecoverySpeed * Time.fixedDeltaTime;
-            _timeUntilStun = Mathf.Min(_timeUntilStun, _tryingToPinDurationUntilStun);
+            // Damage player for the straing of trying to pin while they can't
+            TakeDamage(_cantPinDamagePerSecond * Time.fixedDeltaTime);
         }
     }
 
     #endregion
 
 
-    #region Stun
-
-    public void Stun(float duration)
-    {
-        StartCoroutine(StunCoroutine(duration));
-    }
-
-    private IEnumerator StunCoroutine(float duration)
-    {
-        OnStunned?.Invoke(_combatantType);
-        _combatantFlags.SetFlag(CombatantFlags.Stunned);
-        if (duration > 0f)
-        {
-            yield return new WaitForSeconds(duration);
-        }
-        _combatantFlags.ClearFlag(CombatantFlags.Stunned);
-        OnStunDone?.Invoke(_combatantType);
-    }
-
-    #endregion
-
-    
     public void TakeDamage(float damage)
     {
         // Don't hurt dead player
-        if (_combatantFlags.HasFlag(CombatantFlags.Dead))
+        if (_combatantState == CombatantState.Dead)
         {
             return;
         }
@@ -159,7 +114,7 @@ public class CombantantController : MonoBehaviour
         
         if (_currentHealth <= 0f)
         {
-            _combatantFlags.SetFlag(CombatantFlags.Dead);
+            _combatantState = CombatantState.Dead;
             OnDied?.Invoke(_combatantType);
         }
     }
@@ -179,7 +134,7 @@ public class CombantantController : MonoBehaviour
         
         if (forcefulVector && VectorUtilities.AreVectorsRoughlyInTheSameDirection(thumbVector, Vector2.down))
         {
-            if (_combatantFlags.HasFlag(CombatantFlags.Pinned) && !_combatantFlags.HasFlag(CombatantFlags.Stunned))
+            if (_combatantState == CombatantState.Pinned)
             {
                 // Not stunned and trying to defend - escape pin
                 _thumbMover.SetEnabled(false);
@@ -206,8 +161,8 @@ public class CombantantController : MonoBehaviour
         return _thumbState;
     }
     
-    public CombatantFlags GetFlags()
+    public CombatantState GetCombatantState()
     {
-        return _combatantFlags;
+        return _combatantState;
     }
 }

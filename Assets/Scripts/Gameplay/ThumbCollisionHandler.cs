@@ -1,5 +1,4 @@
 ﻿using System;
-using Gameplay;
 using UnityEngine;
 
 /// <summary>
@@ -53,7 +52,7 @@ public class ThumbCollisionHandler
             return false;
         }
 
-        if (potentialAttacker.GetFlags().HasAnyFlag())
+        if (potentialAttacker.GetCombatantState() != CombatantState.Normal)
         {
             return false;
         }
@@ -78,7 +77,7 @@ public class ThumbCollisionHandler
             return false;
         }
 
-        if (potentialPinner.GetFlags().HasFlag(CombatantFlags.Dead))
+        if (potentialPinner.GetCombatantState() == CombatantState.Dead)
         {
             return false;
         }
@@ -105,9 +104,9 @@ public class ThumbCollisionHandler
     private bool TryStopPin(CombantantController potentialPinner, CombantantController target)
     {
         // If the pinner is no longer pinning, we need to stop the pin.
-        if (potentialPinner.GetThumbState() == ThumbState.Pinning && !potentialPinner.GetFlags().HasAnyFlag())
+        if (potentialPinner.GetThumbState() == ThumbState.Pinning && potentialPinner.GetCombatantState() == CombatantState.Normal)
         {
-            if (target.GetFlags().HasFlag(CombatantFlags.Pinned))
+            if (target.GetCombatantState() == CombatantState.Pinned)
             {
                 _onPinStopped?.Invoke(potentialPinner, target);
                 Debug.Log(potentialPinner.name + " stopped pinning " + target.name);
