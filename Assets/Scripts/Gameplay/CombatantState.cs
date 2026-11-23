@@ -2,5 +2,6 @@
 {
     Normal,
     Stunned,
+    Pinned,
     Dead
 }

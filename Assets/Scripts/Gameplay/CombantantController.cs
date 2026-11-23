@@ -17,6 +17,13 @@ public class CombantantController : MonoBehaviour
     private CombatantState _combatantState;
     private float _maxHealth;
     private float _currentHealth;
+    private ThumbState _thumbState;
+
+    private void FixedUpdate()
+    {
+        // We determine the intention of the thumb based on the direction giver
+        _thumbState = GetThumbState(_directionGiver.GetDirectionalVector());
+    }
 
     public void Initialize(CombatantType combantantType, float initialHealth)
     {
@@ -79,5 +86,23 @@ public class CombantantController : MonoBehaviour
         Vector2 intendedDirection = _directionGiver.GetDirectionalVector();
         Vector2 combinedVector = intendedDirection;//(thumbTipVelocity + intendedDirection) / 2f;
         return combinedVector;//(thumbTipVelocity + intendedDirection) / 2f;
+    }
+    
+    private ThumbState GetThumbState(Vector2 thumbVector)
+    {
+        bool forcefulVector = thumbVector.magnitude >= 0.5f;
+        
+        if (forcefulVector && VectorUtilities.AreVectorsRoughlyInTheSameDirection(thumbVector, Vector2.down))
+        {
+            return ThumbState.Blocking;
+        }
+        
+        if (forcefulVector && VectorUtilities.AreVectorsRoughlyInTheSameDirection(thumbVector, Vector2.up))
+        {
+            return ThumbState.Pinning;
+        }
+        
+        return ThumbState.Swiping;
+        
     }
 }
