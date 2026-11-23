@@ -24,8 +24,14 @@ public class CombantantController : MonoBehaviour
     private void FixedUpdate()
     {
         // We determine the intention of the thumb based on the direction giver
+        var previousThumbState = _thumbState;
         _thumbState = GetThumbState(_directionGiver.GetDirectionalVector());
 
+        if (previousThumbState != _thumbState)
+        {
+            Debug.Log($"Player {_combatantType}: Thumb state changed from {previousThumbState} to {_thumbState}");
+        }
+        
         HandlePinAttempting();
     }
 
@@ -87,7 +93,9 @@ public class CombantantController : MonoBehaviour
         if (_combatantState == CombatantState.Normal && _thumbState == ThumbState.TryingToPin)
         {
             // Damage player for the straing of trying to pin while they can't
-            TakeDamage(_cantPinDamagePerSecond * Time.fixedDeltaTime);
+            float damage = _cantPinDamagePerSecond * Time.fixedDeltaTime;
+            Debug.Log($"Player {_combatantType} is trying to pin while unable, taking {damage} damage.");
+            TakeDamage(damage);
         }
     }
 
