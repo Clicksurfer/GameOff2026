@@ -13,7 +13,10 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
     [SerializeField] private float _startHp = 100f;
     [SerializeField] private float _collisionDamage = 10f;
     [SerializeField] private float _pinDamage = 10f;
-    
+    [SerializeField] private float _tryingToPinDurationUntilStun = 2f;
+    [SerializeField] private float _stunDuration = 3f;
+    [SerializeField] private float _pinAttemptRecoverySpeed = 1f;
+
     private ThumbCollisionHandler _collisionHandler;
     
     private Action<GameState> _startCountdownCallback;
@@ -29,8 +32,20 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
 
     private void InitializePlayers()
     {
-        _playerCombatant.Initialize(CombatantType.Player, _startHp);
-        _opponentCombatant.Initialize(CombatantType.Opponent, _startHp);
+        var initData = new CombatantInitializationData
+        {
+            CombatantType = CombatantType.Player,
+            InitialHealth = _startHp,
+            TryingToPinDurationUntilStun = _tryingToPinDurationUntilStun,
+            StunDuration = _stunDuration,
+            PinAttemptRecoverySpeed = _pinAttemptRecoverySpeed
+        };
+        
+        _playerCombatant.Initialize(initData);
+        
+        // Since data type is struct, we can reuse the same variable and just change the CombatantType for the opponent.
+        initData.CombatantType = CombatantType.Opponent;
+        _opponentCombatant.Initialize(initData);
     }
     
     private void SetupListeners()
@@ -38,6 +53,8 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
         foreach (var detector in _collisionDetectors)
         {
             detector.OnCollisionEntered += HandleCollision;
+            detector.OnCollisionOngoing += HandleOngoingCollision;
+            detector.OnCollisionExited += HandleCollisionExit;
         }
         
         _playerCombatant.OnDied += HandleCombatantDied;
@@ -66,12 +83,40 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
     
     private void HandleCollision(Collision collision)
     {
+        CreateCollisionHandlerIfNeeded();
+        
+        _collisionHandler.HandleCollisionStart();
+    }
+    
+    private void HandleOngoingCollision(Collision collision)
+    {
+        CreateCollisionHandlerIfNeeded();
+        
+        _collisionHandler.HandleOngoingCollision();
+    }
+    
+    private void HandleCollisionExit(Collision collision)
+    {
+        CreateCollisionHandlerIfNeeded();
+        
+        _collisionHandler.HandleCollisionExit();
+    }
+    
+    private void CreateCollisionHandlerIfNeeded()
+    {
         if (_collisionHandler == null)
         {
-            _collisionHandler = new ThumbCollisionHandler(_playerCombatant, _opponentCombatant, _collisionDamage, _pinDamage);
+            _collisionHandler = new ThumbCollisionHandler(_playerCombatant, _opponentCombatant, HandlePinStarted, HandlePinEscaped,_collisionDamage, _pinDamage);
         }
+    }
+
+    private void HandlePinStarted(CombantantController pinner, CombantantController target)
+    {
+        // Tell the pinner they began a pin
+        pinner.SetAsPinning();
         
-        _collisionHandler.HandleCollision();
+        // Tell the target they are being pinned
+        target.SetAsPinned();
     }
 
     private void HandleCombatantDied(CombatantType combatantType)
@@ -84,6 +129,12 @@ public class ThumbWarManager : MonoBehaviour, IGameStateProgressor
         {
             TellGameStateManagerMatchIsWon();
         }
+    }
+
+    private void HandlePinEscaped(CombantantController pinner, CombantantController target)
+    {
+        target.StopGettingPinned();
+        pinner.SetAsNoLongerPinning();
     }
 
     #region Game State

@@ -13,11 +13,18 @@ public class ThumbMover : MonoBehaviour
     [Header("Config")]
     [SerializeField] private float _thumbMaxDistancePerFrame = 0.001f;
     [SerializeField] private float _thumbMaxDegreesPerFrame = 1f;
+    
+    private bool _isEnabled = false;
 
     private void FixedUpdate()
     {
         Vector2 moveDirection = GetDirectionToMoveTo();
         MoveThumb(moveDirection);
+    }
+    
+    public void SetEnabled(bool isEnabled)
+    {
+        _isEnabled = isEnabled;
     }
     
     private Vector2 GetDirectionToMoveTo()
@@ -27,9 +34,13 @@ public class ThumbMover : MonoBehaviour
     
     private void MoveThumb(Vector2 direction)
     {
+        if (_isEnabled)
+        {
+            return;
+        }
+        
         float normalizedX = (direction.x + 1f) / 2f; // Normalize the x value to be between 0 and 1
         float normalizedY = (direction.y + 1f) / 2f; // Normalize the y value to be between 0 and 1
-        Debug.Log($"Normalized X: {normalizedX}, Normalized Y: {normalizedY}");
 
         // We control the thumb root's position and rotation based on the direction, and lerping between the reference transforms for the thumb root.
         Vector3 positionVerticalLerp = Vector3.Lerp(_thumbDownRootReferenceTransform.localPosition, _thumbUpRootReferenceTransform.localPosition, normalizedY);

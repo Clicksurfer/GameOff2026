@@ -3,5 +3,6 @@
     Unspecified,
     Blocking,
     Swiping,
+    TryingToPin,
     Pinning
 }
