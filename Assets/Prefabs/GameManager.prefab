@@ -53,8 +53,9 @@ MonoBehaviour:
   - {fileID: 0}
   _gameStateManager: {fileID: 3235629754570221709}
   _startHp: 100
-  _collisionDamage: 1
-  _pinDamage: 10
+  _collisionDamage: 2
+  _pinDamage: 6
+  _cantPinDamagePerSecond: 5
 --- !u!114 &3235629754570221709
 MonoBehaviour:
   m_ObjectHideFlags: 0
