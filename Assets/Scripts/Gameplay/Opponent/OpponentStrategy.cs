@@ -1,4 +1,5 @@
 ﻿public enum OpponentStrategy
 {
-    ClockBot
+    ClockBot,
+    MovesBot
 }

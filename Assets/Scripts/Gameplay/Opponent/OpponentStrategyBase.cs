@@ -2,7 +2,7 @@
 
 public abstract class OpponentStrategyBase : IDirectionGiver
 {
-    private MonoBehaviour _owner;
+    protected MonoBehaviour _owner;
     
     public OpponentStrategyBase(MonoBehaviour owner)
     {

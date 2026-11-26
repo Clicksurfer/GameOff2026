@@ -23,6 +23,8 @@ public class OpponentDirectionGiver : DirectionGiver
         {
             case OpponentStrategy.ClockBot:
                 return new ClockBotStrategy(this);
+            case OpponentStrategy.MovesBot:
+                return new MovesBotStrategy(this);
             default:
                 throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null);
         }
