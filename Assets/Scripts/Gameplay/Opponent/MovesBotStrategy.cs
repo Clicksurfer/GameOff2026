@@ -38,6 +38,7 @@ public class MovesBotStrategy : OpponentStrategyBase
         {
             yield return DoInterimIdle();
             _currentMove = GetNextMove(_currentMove);
+            Debug.Log($"MovesBotStrategy: Next Move: {_currentMove}");
             yield return DoMove(_currentMove);
         }
     }
