@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 
 public class GamePopupManager : MonoBehaviour
 {
     [SerializeField] private GameObject _startMatchPopup;
     [SerializeField] private GameStateManager _gameStateManager;
+    [SerializeField] private EndgamePopupView _endgamePopupView;
 
     private void Awake()
     {
@@ -16,6 +16,16 @@ public class GamePopupManager : MonoBehaviour
         if (gameState == GameState.Countdown)
         {
             OnCountdownStarted();
+        }
+        
+        else if (gameState == GameState.GameWon)
+        {
+            _endgamePopupView.Show(true);
+        }
+        
+        else if (gameState == GameState.GameLost)
+        {
+            _endgamePopupView.Show(false);
         }
     }
 
