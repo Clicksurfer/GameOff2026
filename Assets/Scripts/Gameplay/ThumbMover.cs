@@ -49,7 +49,11 @@ public class ThumbMover : MonoBehaviour
         Quaternion rotationHorizontalLerp = Quaternion.Lerp(_thumbLeftRootReferenceTransform.localRotation, _thumbRightRootReferenceTransform.localRotation, normalizedX);
         
         // Now we lerp between horizontal and vertical based on the direction vector
-        float verticalToHorizontalLerpFactor = Mathf.Abs(direction.x) / (Mathf.Abs(direction.x) + Mathf.Abs(direction.y));
+        float verticalToHorizontalLerpFactor = 0.5f;
+        if (direction.x != 0)
+        {
+            verticalToHorizontalLerpFactor = Mathf.Abs(direction.x) / (Mathf.Abs(direction.x) + Mathf.Abs(direction.y));
+        }
         Vector3 positionLerp = Vector3.Lerp(positionVerticalLerp, positionHorizontalLerp, verticalToHorizontalLerpFactor);
         Quaternion rotationLerp = Quaternion.Lerp(rotationVerticalLerp, rotationHorizontalLerp, verticalToHorizontalLerpFactor);
 
