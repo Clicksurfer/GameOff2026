@@ -9,14 +9,14 @@ public class MovesBotStrategy : OpponentStrategyBase
 {
     private float _timingVariance = 0.3f;
 
-    private float _iterimIdleDuration = 1f;
+    private float _iterimIdleDuration = 0.5f;
     private float _moveIdleDuration = 1f;
-    private float _individualSwipeDuration = 0.5f;
-    private float _pinDuration = 1f;
+    private float _individualSwipeDuration = 0.25f;
+    private float _pinDuration = 1.7f;
     private float _defendDuration = 2.5f;
     
-    private int _minSwipes = 1;
-    private int _maxSwipes = 5;
+    private int _minSwipes = 3;
+    private int _maxSwipes = 7;
 
     private Move _currentMove;
     private Vector2 _direction;
@@ -72,17 +72,17 @@ public class MovesBotStrategy : OpponentStrategyBase
 
     private IEnumerator DoPin()
     {
-        yield return DoSimpleMoveForSeconds(Vector2.up, GetVariantDuration(_pinDuration));
+        yield return DoSimpleMoveForSeconds(Vector2.up, GetVariantDuration(_pinDuration), Move.Pin);
     }
     
     private IEnumerator DoDefend()
     {
-        yield return DoSimpleMoveForSeconds(Vector2.down, GetVariantDuration(_defendDuration));
+        yield return DoSimpleMoveForSeconds(Vector2.down, GetVariantDuration(_defendDuration), Move.Defend);
     }
     
     private IEnumerator DoIdle()
     {
-        yield return DoSimpleMoveForSeconds(Vector2.zero, GetVariantDuration(_moveIdleDuration));
+        yield return DoSimpleMoveForSeconds(Vector2.zero, GetVariantDuration(_moveIdleDuration), Move.Idle);
     }
     
     private IEnumerator DoSwipes()
@@ -93,7 +93,7 @@ public class MovesBotStrategy : OpponentStrategyBase
         {
             Vector2 swipeDirection = isRightSwipe ? Vector2.right : Vector2.left;
             isRightSwipe = !isRightSwipe; // Alternate direction for next swipe
-            yield return DoSimpleMoveForSeconds(swipeDirection, GetVariantDuration(_individualSwipeDuration));
+            yield return DoSimpleMoveForSeconds(swipeDirection, GetVariantDuration(_individualSwipeDuration), Move.Swipe);
         }
     }
     
